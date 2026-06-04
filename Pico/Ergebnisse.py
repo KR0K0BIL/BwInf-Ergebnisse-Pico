@@ -18,7 +18,7 @@ def send(text: str) -> str:
     start_time = time.time()
     response = ""
     
-    while (time.time() - start_time) < 2:
+    while (time.time() - start_time) < 3:
         if poller.poll(100):
             char = sys.stdin.read(1)
             if char == '\n':  
@@ -49,9 +49,11 @@ connect_usb()
 while True:
     status = send("status")
     if status == "Normal":
-        gelb.on()
-        time.sleep(5)
-        gelb.off()
+        for _ in range(5):
+            gelb.on()
+            time.sleep(0.5)
+            gelb.off()
+            time.sleep(0.5)
         time.sleep(120)
     elif status == "Weiter":
         gruen.on()

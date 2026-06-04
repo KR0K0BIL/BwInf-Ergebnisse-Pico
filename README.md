@@ -55,9 +55,9 @@ Steht die Verbindung mit dem Computer, erlischen alle LEDs und ein aufsteigender
 Danach werden in regelmäßigen Abständen (alle zwei Minuten) Anfragen gesendet.
 Die LEDs und Töne haben folgende Bedeutungen:
 
-- Gelbe LED blinkt für 5 Sekunden: Die Ergebnisse sind noch nicht veröffentlicht, alles wie bisher
-- Grüne LED leuchtet (Melodie: "Alle Vögel sind schon da"): Du bist weitergekommen! Herzlichen Glückwunsch!
-- Rote LED leuchtet (Melodie: "Alle Vögel sind schon da" in Moll): Du bist leider nicht weritergekommen.
-- Blaue LED blinkt einmal pro Sekunde (Melodie: e, d, c, d, e): Der Login ist nicht mehr gültig. Melde dich nochmal an und gib den Link in Terminal (wo der Python Code läuft) ein.
-- Blaue LED blinkt fünfmal pro Sekunde (Melodie: zwei tiefe Töne): Irgendein unbekannter Fehler ist aufgetreten
-- Alle LEDs leuchten (Melodie: zwei hohe Töne): Der Pico kann den Computer nicht erreichen (siehe oben unter Funktionsweise)
+- 🟡 Gelbe LED blinkt für 5 Sekunden: Die Ergebnisse sind noch nicht veröffentlicht, alles wie bisher
+- 🟢 Grüne LED leuchtet (Melodie: "Alle Vögel sind schon da"): Du bist weitergekommen! Herzlichen Glückwunsch!
+- 🔴 Rote LED leuchtet (Melodie: "Alle Vögel sind schon da" in Moll): Du bist leider nicht weritergekommen.
+- 🔵 Blaue LED blinkt einmal pro Sekunde (Melodie: e, d, c, d, e): Der Login ist nicht mehr gültig. Melde dich nochmal an und gib den Link in Terminal (wo der Python Code läuft) ein.
+- 🔵 Blaue LED blinkt fünfmal pro Sekunde (Melodie: zwei tiefe Töne): Irgendein unbekannter Fehler ist aufgetreten
+- 🟡🟢🔴🔵 Alle LEDs leuchten (Melodie: zwei hohe Töne): Der Pico kann den Computer nicht erreichen (siehe oben unter Funktionsweise)
