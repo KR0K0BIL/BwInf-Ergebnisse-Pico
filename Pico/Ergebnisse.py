@@ -13,12 +13,18 @@ rot = Pin(7, Pin.OUT)
 blau = Pin(3, Pin.OUT)
 
 def send(text: str) -> str:
+    try:
+        while poller.poll(100):
+            sys.stdin.read(1)
+    except:
+        pass
+    
     sys.stdout.write(text + "\n")
     
     start_time = time.time()
     response = ""
     
-    while (time.time() - start_time) < 3:
+    while (time.time() - start_time) < 5:
         if poller.poll(100):
             char = sys.stdin.read(1)
             if char == '\n':  
@@ -27,7 +33,6 @@ def send(text: str) -> str:
     return response
 
 def connect_usb():
-
     gelb.on()
     gruen.on()
     rot.on()
@@ -54,7 +59,7 @@ while True:
             time.sleep(0.5)
             gelb.off()
             time.sleep(0.5)
-        time.sleep(120)
+        time.sleep(60)
     elif status == "Weiter":
         gruen.on()
         Sound.play_dur()
@@ -79,6 +84,7 @@ while True:
             time.sleep(0.1)
             blau.off()
             time.sleep(0.1)
+        time.sleep(10)
     elif status == "ping":
         continue
     else:

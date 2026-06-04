@@ -67,39 +67,48 @@ while True:
     try:
         SERIAL_PORT = connect_usb()
         ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
+
+        def send(text: str):
+            ser.write((text+"\n").encode('utf-8'))
+
         time.sleep(1)
 
         while True:
             if ser.in_waiting > 0:
                 request = ser.readline().decode('utf-8').strip()
                 response = None
-
+                print(">>", request)
                 if request == "ping":
                     response = "pong"
                 if request == "status":
-                    html = requests.post(url, headers=headers, cookies={}).text
+                    try:
+                        post_response = requests.post(url, headers=headers, cookies={}, timeout=2)
 
-                    soup = BeautifulSoup(html, 'html.parser')
+                        soup = BeautifulSoup(post_response.text, 'html.parser')
 
-                    if "Session Timeout" in soup.text:
-                        response = "Session"
-                    else:
+                        if "Session Timeout" in soup.text:
+                            response = "Session"
+                        else:
+                            response = "Fehler"
+                            for label in soup.select("span[class*=label]"):
+                                text = label.text
+                                if text.startswith("Runde 2"):
+                                    if text == "Runde 2 nicht mehr geöffnet, aber noch nicht bewertet":
+                                        response = "Normal"
+                                    elif "nicht" in text:
+                                        response = "Schade"
+                                    else:
+                                        response = "Weiter"
+                            if response == "Fehler":
+                                print(soup.text)
+
+                    except (requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout):
                         response = "Fehler"
-                        for label in soup.select("span[class*=label]"):
-                            text = label.text
-                            if text.startswith("Runde 2"):
-                                if text == "Runde 2 nicht mehr geöffnet, aber noch nicht bewertet":
-                                    response = "Normal"
-                                elif "nicht" in text:
-                                    response = "Schade"
-                                else:
-                                    response = "Weiter"
 
+                print("<<", response)
                 if response is not None:
-                    ser.write(response.encode('utf-8'))
+                    send(response)
                 
-                if response == "Fehler":
-                    print(soup.text)
                 if response == "Session":
                     request_login()
 
